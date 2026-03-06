@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open a Personal Bank Account – Prominence Bank</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #0d2045;
+    --navy-light: #132a5e;
+    --blue: #1a4fa0;
+    --blue-bright: #2563eb;
+    --gold: #c9a84c;
+    --gold-light: #e8c96b;
+    --gold-pale: #f5e6b8;
+    --cyan: #38b2e0;
+    --white: #ffffff;
+    --off-white: #f0f4fa;
+    --gray-light: #e2e8f0;
+    --gray: #94a3b8;
+    --gray-dark: #475569;
+    --red: #e53e3e;
+    --green: #38a169;
+    --shadow: 0 4px 32px rgba(10,22,40,0.18);
+    --shadow-gold: 0 4px 24px rgba(201,168,76,0.18);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--cyan);
+    padding: 8px 40px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    font-size: 13px;
+    color: var(--navy);
+    font-weight: 500;
+    flex-wrap: wrap;
+  }
+  .topbar-item { display: flex; align-items: center; gap: 6px; }
+  .topbar-item svg { width: 15px; height: 15px; }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--navy);
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 72px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--cyan), var(--blue-bright));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.5px;
+  }
+  .logo-sub {
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: block;
+    margin-top: -2px;
+  }
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .header-nav a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 13.5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+  .header-nav a:hover { color: var(--white); background: rgba(255,255,255,0.07); }
+  .header-nav a.active { color: var(--gold); }
+  .btn-login {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--navy) !important;
+    padding: 8px 20px !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+  }
+  .btn-login:hover { transform: translateY(-1px); box-shadow: var(--shadow-gold); }
+
+  /* ── HERO BANNER ── */
+  .page-hero {
+    background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-light) 60%, #1a3a6e 100%);
+    padding: 48px 40px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 2px solid rgba(201,168,76,0.3);
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(56,178,224,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .page-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .hero-subtitle {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  /* ── STEP NAV ── */
+  .step-nav-wrap {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: var(--radius);
+    padding: 0 24px;
+    margin-bottom: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .step-nav-wrap::-webkit-scrollbar { display: none; }
+  .step-nav {
+    display: flex;
+    align-items: stretch;
+    min-width: max-content;
+    gap: 0;
+  }
+  .step-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 18px 20px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.25s;
+    white-space: nowrap;
+    color: var(--gray);
+    font-size: 13px;
+    font-weight: 500;
+    position: relative;
+    user-select: none;
+  }
+  .step-tab .step-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    transition: all 0.25s;
+    flex-shrink: 0;
+  }
+  .step-tab.active {
+    color: var(--white);
+    border-bottom-color: var(--gold);
+  }
+  .step-tab.active .step-num {
+    background: var(--gold);
+    color: var(--navy);
+  }
+  .step-tab.completed {
+    color: var(--cyan);
+  }
+  .step-tab.completed .step-num {
+    background: var(--cyan);
+    color: var(--navy);
+  }
+  .step-tab.completed .step-num::after { content: '✓'; }
+  .step-tab.completed .step-num span { display: none; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0 24px;
+  }
+  .progress-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .progress-bar-bg {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .progress-pct {
+    font-size: 12px;
+    color: var(--gray);
+    white-space: nowrap;
+  }
+
+  /* ── FORM CARD ── */
+  .form-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .form-card-header {
+    background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(26,79,160,0.15));
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 28px 36px 24px;
+    position: relative;
+  }
+  .form-card-header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--gold), var(--gold-light));
+    border-radius: 4px 0 0 0;
+  }
+  .form-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .form-section-desc {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+  }
+  .form-card-body {
+    padding: 36px;
+  }
+
+  /* ── FIELDS ── */
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .field-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .field-grid.cols-1 { grid-template-columns: 1fr; }
+  @media(max-width:640px) {
+    .field-grid, .field-grid.cols-3 { grid-template-columns: 1fr; }
+  }
+
+  .field-group { display: flex; flex-direction: column; gap: 6px; }
+  .field-group.span-2 { grid-column: span 2; }
+  @media(max-width:640px) { .field-group.span-2 { grid-column: span 1; } }
+
+  .field-label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  .field-label .req { color: var(--gold); margin-left: 2px; }
+
+  .field-input,
+  .field-select,
+  .field-textarea {
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.12);
+    border-radius: var(--radius-sm);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 11px 14px;
+    transition: all 0.2s;
+    width: 100%;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  .field-input::placeholder { color: rgba(255,255,255,0.3); }
+  .field-input:focus,
+  .field-select:focus,
+  .field-textarea:focus {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.06);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+  }
+  .field-input.error, .field-select.error { border-color: var(--red); }
+  .field-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23c9a84c' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+  .field-select option { background: var(--navy-mid); color: var(--white); }
+  .field-textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+  .field-hint { font-size: 11.5px; color: var(--gray); margin-top: 2px; }
+  .field-error { font-size: 11.5px; color: var(--red); margin-top: 2px; display: none; }
+  .field-group.has-error .field-error { display: block; }
+  .field-group.has-error .field-label { color: var(--red); }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 32px 0 24px;
+  }
+  .section-divider-line { flex: 1; height: 1px; background: rgba(201,168,76,0.2); }
+  .section-divider-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ── ACCOUNT TYPE CARDS ── */
+  .account-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  .account-card {
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .account-card:hover { border-color: rgba(201,168,76,0.4); }
+  .account-card.selected {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.08);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+  }
+  .account-card input[type="radio"] { display: none; }
+  .account-card-radio {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.25);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .account-card.selected .account-card-radio {
+    border-color: var(--gold);
+    background: var(--gold);
+  }
+  .account-card.selected .account-card-radio::after {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--navy);
+  }
+  .account-card-title { font-weight: 700; font-size: 15px; color: var(--white); margin-bottom: 6px; }
+  .account-card-desc { font-size: 12.5px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+  .account-card-fee {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 11.5px;
+    color: var(--gold);
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-weight: 600;
+  }
+  .account-card-badge {
+    position: absolute;
+    top: 12px; right: 12px;
+    font-size: 10px;
+    color: var(--cyan);
+    background: rgba(56,178,224,0.1);
+    border: 1px solid rgba(56,178,224,0.25);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── INFO BOX ── */
+  .info-box {
+    background: rgba(56,178,224,0.07);
+    border: 1px solid rgba(56,178,224,0.2);
+    border-left: 3px solid var(--cyan);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .info-box strong { color: var(--cyan); }
+
+  /* ── FILE UPLOAD ── */
+  .file-upload-area {
+    border: 2px dashed rgba(201,168,76,0.3);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    background: rgba(201,168,76,0.03);
+  }
+  .file-upload-area:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.06);
+  }
+  .file-upload-area input { display: none; }
+  .file-upload-icon { font-size: 36px; margin-bottom: 10px; }
+  .file-upload-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+  .file-upload-hint { font-size: 12.5px; color: rgba(255,255,255,0.45); }
+  .file-upload-btn {
+    display: inline-block;
+    margin-top: 14px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--navy);
+    padding: 9px 22px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .file-upload-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-gold); }
+  .file-name-display {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--cyan);
+    display: none;
+  }
+
+  /* ── PAYMENT INFO ── */
+  .payment-block {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+  .payment-block-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .payment-row {
+    display: flex;
+    gap: 10px;
+    font-size: 13.5px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    line-height: 1.5;
+  }
+  .payment-row:last-child { border-bottom: none; }
+  .payment-key { color: rgba(255,255,255,0.5); min-width: 160px; flex-shrink: 0; }
+  .payment-val { color: var(--white); font-weight: 500; word-break: break-all; }
+  .copy-btn {
+    margin-left: auto;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.25);
+    color: var(--gold);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .copy-btn:hover { background: rgba(201,168,76,0.2); }
+
+  /* ── REFUND POLICY ── */
+  .policy-block {
+    background: rgba(56,178,224,0.05);
+    border: 1px solid rgba(56,178,224,0.15);
+    border-radius: var(--radius-sm);
+    padding: 18px 22px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .policy-block strong { color: var(--white); }
+  .policy-block ul { padding-left: 18px; margin: 8px 0; }
+  .policy-block li { margin-bottom: 4px; }
+
+  /* ── NAVIGATION BUTTONS ── */
+  .form-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 28px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    border: none;
+    transition: all 0.22s;
+    text-decoration: none;
+    user-select: none;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: var(--navy);
+    box-shadow: 0 2px 12px rgba(201,168,76,0.25);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(201,168,76,0.35); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.75);
+    border: 1.5px solid rgba(255,255,255,0.15);
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.12); color: var(--white); }
+  .btn-ghost {
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    padding: 10px 18px;
+  }
+  .btn-ghost:hover { color: var(--white); }
+  .btn-submit {
+    background: linear-gradient(135deg, var(--blue-bright), var(--blue));
+    color: var(--white);
+    box-shadow: 0 2px 12px rgba(37,99,235,0.3);
+    min-width: 180px;
+    justify-content: center;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(37,99,235,0.4); }
+  .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* ── STEP HIDDEN ── */
+  .step-panel { display: none; animation: fadeIn 0.3s ease; }
+  .step-panel.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── REVIEW TABLE ── */
+  .review-section { margin-bottom: 28px; }
+  .review-section-title {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .review-grid {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .review-row {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 13.5px;
+  }
+  .review-row:last-child { border-bottom: none; }
+  .review-key {
+    width: 200px;
+    flex-shrink: 0;
+    padding: 11px 16px;
+    color: rgba(255,255,255,0.5);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    font-size: 12.5px;
+  }
+  .review-val { padding: 11px 16px; color: var(--white); font-weight: 500; }
+
+  /* ── SUCCESS ── */
+  .success-panel {
+    text-align: center;
+    padding: 60px 40px;
+  }
+  .success-icon {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, var(--green), #48bb78);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    margin: 0 auto 24px;
+    box-shadow: 0 0 0 12px rgba(56,161,105,0.1);
+  }
+  .success-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .success-sub { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.6; max-width: 460px; margin: 0 auto 32px; }
+  .app-id-display {
+    display: inline-block;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: var(--radius-sm);
+    padding: 14px 28px;
+    font-family: monospace;
+    font-size: 20px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+  }
+
+  /* ── KYCA NOTE ── */
+  .kyc-note {
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius-sm);
+    padding: 16px 20px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+  .kyc-note strong { color: var(--gold-light); }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--navy);
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 32px 40px;
+    text-align: center;
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.35);
+  }
+  .footer a { color: var(--gold); text-decoration: none; }
+  .footer-line { margin: 6px 0; }
+
+  /* ── MOBILE ── */
+  @media(max-width:760px) {
+    .topbar { padding: 8px 16px; gap: 12px; font-size: 11.5px; }
+    .header { padding: 0 16px; }
+    .header-nav { display: none; }
+    .page-hero { padding: 32px 20px 24px; }
+    .form-card-header, .form-card-body { padding: 22px 20px; }
+    .form-nav { flex-direction: column-reverse; align-items: stretch; }
+    .btn { justify-content: center; }
+    .review-key { width: 130px; }
+    .main-wrap { padding: 24px 12px 60px; }
+  }
+
+  /* Checkbox */
+  .checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+  .checkbox-group input[type="checkbox"] { display: none; }
+  .custom-checkbox {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .checkbox-group:has(input:checked) .custom-checkbox {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .checkbox-group:has(input:checked) .custom-checkbox::after { content: '✓'; font-size: 11px; color: var(--navy); font-weight: 700; }
+  .checkbox-label { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+
+  /* Tag badges */
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-left: 6px;
+  }
+  .tag-gold { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+  .tag-cyan { background: rgba(56,178,224,0.1); color: var(--cyan); border: 1px solid rgba(56,178,224,0.25); }
+
+  .nav-left { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.5 12.86 19.79 19.79 0 01.44 4.25 2 2 0 012.42 2.1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 9.4a16 16 0 006.29 6.29l1.76-1.76a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+    +44 20 8895 6493
+  </div>
+  <div class="topbar-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    (051) 210567 PROMIN G
+  </div>
+  <div class="topbar-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    Diplomatic Jurisdiction – Foreign Trade Mission Office (ETMO)
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <a href="#" class="logo">
+    <div class="logo-icon">🏛</div>
+    <div>
+      <div class="logo-text">PROMINENCE</div>
+      <span class="logo-sub">BANK</span>
+    </div>
+  </a>
+  <nav class="header-nav">
+    <a href="#">Home</a>
+    <a href="#">About Us</a>
+    <a href="#">Fee</a>
+    <a href="#" class="active">Open Account</a>
+    <a href="#">KTT Account</a>
+    <a href="#">Services</a>
+    <a href="#">Contact Us</a>
+    <a href="#" class="btn-login">Login</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-eyebrow">Prominence Bank • Secure Banking</div>
+  <h1 class="hero-title">Open a Personal Bank Account</h1>
+  <p class="hero-subtitle">Complete the application form below. All information is encrypted and handled with full confidentiality.</p>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+  <!-- STEP NAVIGATION -->
+  <div class="step-nav-wrap">
+    <div class="step-nav" id="stepNav">
+      <div class="step-tab active" data-step="1">
+        <div class="step-num"><span>1</span></div> Account Type
+      </div>
+      <div class="step-tab" data-step="2">
+        <div class="step-num"><span>2</span></div> Personal Details
+      </div>
+      <div class="step-tab" data-step="3">
+        <div class="step-num"><span>3</span></div> Address & Contact
+      </div>
+      <div class="step-tab" data-step="4">
+        <div class="step-num"><span>4</span></div> Transaction Profile
+      </div>
+      <div class="step-tab" data-step="5">
+        <div class="step-num"><span>5</span></div> Source of Funds
+      </div>
+      <div class="step-tab" data-step="6">
+        <div class="step-num"><span>6</span></div> KYC Uploads
+      </div>
+      <div class="step-tab" data-step="7">
+        <div class="step-num"><span>7</span></div> Payment Info
+      </div>
+      <div class="step-tab" data-step="8">
+        <div class="step-num"><span>8</span></div> Review & Submit
+      </div>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-label" id="stepLabel">Step 1 of 8</div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill" style="width:12%"></div>
+    </div>
+    <div class="progress-pct" id="progressPct">12% Complete</div>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="form-card">
+
+    <!-- ════ STEP 1: ACCOUNT TYPE ════ -->
+    <div class="step-panel active" id="step1">
+      <div class="form-card-header">
+        <div class="form-section-title">Select Account Type</div>
+        <div class="form-section-desc">Please choose the type of personal bank account you wish to open.</div>
+      </div>
+      <div class="form-card-body">
+
+        <div class="field-grid cols-1">
+          <div class="field-group">
+            <label class="field-label">Application ID <span class="req">*</span></label>
+            <input type="text" class="field-input" id="appId" placeholder="e.g. PBA-2025-00001" />
+            <div class="field-hint">A reference ID for your application</div>
+          </div>
+        </div>
+
+        <div class="section-divider">
+          <div class="section-divider-line"></div>
+          <div class="section-divider-label">Choose Your Account</div>
+          <div class="section-divider-line"></div>
+        </div>
+
+        <div class="account-cards">
+          <label class="account-card selected" onclick="selectAccount(this)">
+            <input type="radio" name="accountType" value="savings" checked>
+            <div class="account-card-radio"></div>
+            <div class="account-card-title">Savings Account</div>
+            <div class="account-card-desc">Standard personal savings and custody account for everyday and international banking.</div>
+            <span class="account-card-fee">€25,000 fee</span>
+            <span class="account-card-badge">KTT Ready</span>
+          </label>
+          <label class="account-card" onclick="selectAccount(this)">
+            <input type="radio" name="accountType" value="custody">
+            <div class="account-card-radio"></div>
+            <div class="account-card-title">Custody Account</div>
+            <div class="account-card-desc">Secure custody and asset holding account. Suitable for large asset management.</div>
+            <span class="account-card-fee">€25,000 fee</span>
+            <span class="account-card-badge">KTT Ready</span>
+          </label>
+          <label class="account-card" onclick="selectAccount(this)">
+            <input type="radio" name="accountType" value="numbered">
+            <div class="account-card-radio"></div>
+            <div class="account-card-title">Numbered Account</div>
+            <div class="account-card-desc">Anonymous coded account offering a higher level of privacy and discretion.</div>
+            <span class="account-card-fee">€50,000 fee</span>
+            <span class="account-card-badge">KTT Ready</span>
+          </label>
+          <label class="account-card" onclick="selectAccount(this)">
+            <input type="radio" name="accountType" value="crypto">
+            <div class="account-card-radio"></div>
+            <div class="account-card-title">Cryptocurrency Account</div>
+            <div class="account-card-desc">Digital asset account supporting major cryptocurrencies and blockchain transactions.</div>
+            <span class="account-card-fee">€25,000 fee</span>
+          </label>
+        </div>
+
+        <div class="info-box" style="margin-top:20px;">
+          <strong>Note:</strong> Savings Accounts, Custody Accounts, and Numbered Accounts are eligible for <strong>KEY TESTED TELEX (KTT)</strong> transactions. Please complete all fields accurately — incomplete information may cause delays.
+        </div>
+
+        <div class="form-nav">
+          <div class="nav-left">
+            <button class="btn btn-ghost" onclick="saveLater()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Save &amp; Continue Later
+            </button>
+          </div>
+          <button class="btn btn-primary" onclick="goNext()">
+            Next: Personal Details
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ STEP 2: PERSONAL DETAILS ════ -->
+    <div class="step-panel" id="step2">
+      <div class="form-card-header">
+        <div class="form-section-title">Personal Details</div>
+        <div class="form-section-desc">Please provide your personal information exactly as shown on your passport or government-issued ID.</div>
+      </div>
+      <div class="form-card-body">
+        <div class="field-grid">
+          <div class="field-group">
+            <label class="field-label">First Name <span class="req">*</span></label>
+            <input type="text" class="field-input" placeholder="As on passport" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Last Name <span class="req">*</span></label>
+            <input type="text" class="field-input" placeholder="As on passport" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Middle Name</label>
+            <input type="text" class="field-input" placeholder="If applicable" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Date of Birth <span class="req">*</span></label>
+            <input type="date" class="field-input" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Place of Birth <span class="req">*</span></label>
+            <input type="text" class="field-input" placeholder="City, Country" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Nationality <span class="req">*</span></label>
+            <input type="text" class="field-input" placeholder="e.g. British, American" required />
+          </div>
+        </div>
+
+        <div class="section-divider">
+          <div class="section-divider-line"></div>
+          <div class="section-divider-label">Passport / ID</div>
+          <div class="section-divider-line"></div>
+        </div>
+
+        <div class="field-grid cols-3">
+          <div class="field-group">
+            <label class="field-label">Passport / ID Number <span class="req">*</span></label>
+            <input type="text" class="field-input" placeholder="Document number" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Date of Issue <span class="req">*</span></label>
+            <input type="date" class="field-input" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Expiration Date <span class="req">*</span></label>
+            <input type="date" class="field-input" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Country of Issue <span class="req">*</span></label>
+            <select class="field-select">
+              <option value="">Select country</option>
+              <option>United Kingdom</option>
+              <option>United States</option>
+              <option>Germany</option>
+              <option>France</option>
+              <option>Switzerland</option>
+              <option>United Arab Emirates</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <div class="nav-left">
+            <button class="btn btn-secondary" onclick="goPrev()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              Back
+            </button>
+            <button class="btn btn-ghost" onclick="saveLater()">Save &amp; Continue Later</button>
+          </div>
+          <button class="btn btn-primary" onclick="goNext()">
+            Next: Address &amp; Contact
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ STEP 3: ADDRESS & CONTACT ════ -->
+    <div class="step-panel" id="step3">
+      <div class="form-card-header">
+        <div class="form-section-title">Address &amp; Contact</div>
+        <div class="form-section-desc">Please provide your current residential address and contact details.</div>
+      </div>
+      <div class="form-card-body">
+        <div class="field-grid">
+          <div class="field-group span-2">
+            <label class="field-label">Home Address (Line 1) <span class="req">*</span></label>
+            <input type="text" class="field-input" placeholder="Street address" required />
+          </div>
+          <div class="field-group span-2">
+            <label class="field-label">Home Address (Line 2)</label>
+            <input type="text" class="field-input" placeholder="Apartment, suite, etc." />
+          </div>
+          <div class="field-group">
+            <label class="field-label">City</label>
+            <input type="text" class="field-input" placeholder="City" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">State / Province</label>
+            <input type="text" class="field-input" placeholder="State or Province" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">ZIP / Postal Code</label>
+            <input type="text" class="field-input" placeholder="ZIP / Postal code" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Country <span class="req">*</span></label>
+            <select class="field-select">
+              <option value="">Select country</option>
+              <option>United Kingdom</option>
+              <option>United States</option>
+              <option>Germany</option>
+              <option>France</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="section-divider">
+          <div class="section-divider-line"></div>
+          <div class="section-divider-label">Contact Information</div>
+          <div class="section-divider-line"></div>
+        </div>
+
+        <div class="field-grid">
+          <div class="field-group">
+            <label class="field-label">Email Address <span class="req">*</span></label>
+            <input type="email" class="field-input" placeholder="your@email.com" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Confirm Email Address <span class="req">*</span></label>
+            <input type="email" class="field-input" placeholder="Confirm email" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Mobile Number <span class="req">*</span></label>
+            <input type="tel" class="field-input" placeholder="+44 XXXX XXXXXX" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Telephone Number</label>
+            <input type="tel" class="field-input" placeholder="+44 XXXX XXXXXX" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Fax Number</label>
+            <input type="tel" class="field-input" placeholder="Optional" />
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <div class="nav-left">
+            <button class="btn btn-secondary" onclick="goPrev()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              Back
+            </button>
+            <button class="btn btn-ghost" onclick="saveLater()">Save &amp; Continue Later</button>
+          </div>
+          <button class="btn btn-primary" onclick="goNext()">
+            Next: Transaction Profile
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ STEP 4: TRANSACTION PROFILE ════ -->
+    <div class="step-panel" id="step4">
+      <div class="form-card-header">
+        <div class="form-section-title">Transaction Profile</div>
+        <div class="form-section-desc">Help us understand your expected banking activity for compliance purposes.</div>
+      </div>
+      <div class="form-card-body">
+        <div class="field-grid">
+          <div class="field-group">
+            <label class="field-label">Main Countries for Outgoing Transfers</label>
+            <input type="text" class="field-input" placeholder="e.g. UK, Germany, USA" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Main Countries for Incoming Transfers</label>
+            <input type="text" class="field-input" placeholder="e.g. Switzerland, UAE" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Est. Number of Outgoing Transfers/Month</label>
+            <select class="field-select">
+              <option value="">Select range</option>
+              <option>1–5</option>
+              <option>6–15</option>
+              <option>16–30</option>
+              <option>31–50</option>
+              <option>50+</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Est. Number of Incoming Transfers/Month</label>
+            <select class="field-select">
+              <option value="">Select range</option>
+              <option>1–5</option>
+              <option>6–15</option>
+              <option>16–30</option>
+              <option>31–50</option>
+              <option>50+</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Average Value per Transfer</label>
+            <input type="text" class="field-input" placeholder="e.g. €50,000" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Maximum Value per Transfer</label>
+            <input type="text" class="field-input" placeholder="e.g. €500,000" />
+          </div>
+        </div>
+
+        <div class="section-divider">
+          <div class="section-divider-line"></div>
+          <div class="section-divider-label">Account Details</div>
+          <div class="section-divider-line"></div>
+        </div>
+
+        <div class="field-grid">
+          <div class="field-group">
+            <label class="field-label">Account Currency <span class="req">*</span></label>
+            <select class="field-select">
+              <option value="">Select currency</option>
+              <option>EUR – Euro</option>
+              <option>USD – US Dollar</option>
+              <option>GBP – British Pound</option>
+              <option>CHF – Swiss Franc</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Account Name (Reference)</label>
+            <input type="text" class="field-input" placeholder="Optional nickname for this account" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Recommended by (Referral)</label>
+            <input type="text" class="field-input" placeholder="Referrer name or code" />
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <div class="nav-left">
+            <button class="btn btn-secondary" onclick="goPrev()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              Back
+            </button>
+            <button class="btn btn-ghost" onclick="saveLater()">Save &amp; Continue Later</button>
+          </div>
+          <button class="btn btn-primary" onclick="goNext()">
+            Next: Source of Funds
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ STEP 5: SOURCE OF FUNDS ════ -->
+    <div class="step-panel" id="step5">
+      <div class="form-card-header">
+        <div class="form-section-title">Source of Funds</div>
+        <div class="form-section-desc">Please provide details about the initial funding of your account and the originating bank.</div>
+      </div>
+      <div class="form-card-body">
+        <div class="field-grid">
+          <div class="field-group">
+            <label class="field-label">Currency of Initial Funding</label>
+            <select class="field-select">
+              <option value="">Select currency</option>
+              <option>EUR</option>
+              <option>USD</option>
+              <option>GBP</option>
+              <option>CHF</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Source of Initial Funding</label>
+            <select class="field-select">
+              <option value="">Select source</option>
+              <option>Business Income</option>
+              <option>Investment Returns</option>
+              <option>Inheritance</option>
+              <option>Property Sale</option>
+              <option>Savings</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Value of Initial Funding</label>
+            <input type="text" class="field-input" placeholder="e.g. €500,000" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Originating Bank Name</label>
+            <input type="text" class="field-input" placeholder="Name of sending bank" />
+          </div>
+          <div class="field-group span-2">
+            <label class="field-label">Originating Bank Address</label>
+            <input type="text" class="field-input" placeholder="Full bank address" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Account Name (at originating bank)</label>
+            <input type="text" class="field-input" placeholder="As on account" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Account Number (at originating bank)</label>
+            <input type="text" class="field-input" placeholder="Account / IBAN" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Signatory Full Name</label>
+            <input type="text" class="field-input" placeholder="Full legal name" />
+          </div>
+          <div class="field-group span-2">
+            <label class="field-label">How were these funds generated?</label>
+            <textarea class="field-textarea" placeholder="Please describe precisely how the funds were generated..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <div class="nav-left">
+            <button class="btn btn-secondary" onclick="goPrev()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              Back
+            </button>
+            <button class="btn btn-ghost" onclick="saveLater()">Save &amp; Continue Later</button>
+          </div>
+          <button class="btn btn-primary" onclick="goNext()">
+            Next: KYC Uploads
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ STEP 6: KYC UPLOADS ════ -->
+    <div class="step-panel" id="step6">
+      <div class="form-card-header">
+        <div class="form-section-title">KYC / AML Documentation</div>
+        <div class="form-section-desc">Please upload clear, valid copies of the required identity documents.</div>
+      </div>
+      <div class="form-card-body">
+
+        <div class="kyc-note">
+          <strong>Important:</strong> Please ensure all documents are clear, valid, and in full colour. PCM may assist with intake and document coordination and transmit the compiled package to Prominence Bank. Prominence Bank may request additional documentation or enhanced due diligence at any time. Incomplete or inconsistent information may delay processing or result in the application being declined.
+        </div>
+
+        <div class="section-divider">
+          <div class="section-divider-line"></div>
+          <div class="section-divider-label">Passport Upload</div>
+          <div class="section-divider-line"></div>
+        </div>
+
+        <div class="file-upload-area" onclick="document.getElementById('passportFile').click()">
+          <input type="file" id="passportFile" accept="image/*,.pdf" onchange="showFileName(this, 'passportName')">
+          <div class="file-upload-icon">🛂</div>
+          <div class="file-upload-title">Full Colour Passport Photo <span style="color:var(--red)">*</span></div>
+          <div class="file-upload-hint">Upload a full colour photo of your passport (JPEG, PNG, or PDF). Max 10MB.</div>
+          <div class="file-upload-btn">Choose File</div>
+          <div class="file-name-display" id="passportName"></div>
+        </div>
+
+        <div class="section-divider" style="margin-top:28px;">
+          <div class="section-divider-line"></div>
+          <div class="section-divider-label">Fee Payment Bank Details</div>
+          <div class="section-divider-line"></div>
+        </div>
+
+        <div class="info-box">
+          If you are paying the account opening fee, please also provide details of the bank account from which the fee is being paid:
+        </div>
+
+        <div class="field-grid">
+          <div class="field-group">
+            <label class="field-label">Bank Name</label>
+            <input type="text" class="field-input" placeholder="Bank paying the fee" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Bank Address</label>
+            <input type="text" class="field-input" placeholder="Full bank address" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Bank SWIFT Code</label>
+            <input type="text" class="field-input" placeholder="SWIFT / BIC" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Account Holder Name</label>
+            <input type="text" class="field-input" placeholder="As on account" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Account Number</label>
+            <input type="text" class="field-input" placeholder="Account / IBAN" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Account Signatory Name</label>
+            <input type="text" class="field-input" placeholder="Full legal name" />
+          </div>
+          <div class="field-group span-2">
+            <label class="field-label">Origin of Deposit Funds</label>
+            <textarea class="field-textarea" style="min-height:80px;" placeholder="Describe the origin of the deposit funds..."></textarea>
+          </div>
+        </div>
+
+        <div class="form-nav">
+          <div class="nav-left">
+            <button class="btn btn-secondary" onclick="goPrev()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              Back
+            </button>
+            <button class="btn btn-ghost" onclick="saveLater()">Save &amp; Continue Later</button>
+          </div>
+          <button class="btn btn-primary" onclick="goNext()">
+            Next: Payment Info
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ STEP 7: PAYMENT INFO ════ -->
+    <div class="step-panel" id="step7">
+      <div class="form-card-header">
+        <div class="form-section-title">Account Opening Fee — Payment Instructions</div>
+        <div class="form-section-desc">Applicable to all new account types. Payment does not guarantee approval or account opening.</div>
+      </div>
+      <div class="form-card-body">
+
+        <div class="policy-block">
+          <strong>Account Opening Fees</strong>
+          <ul style="margin-top:8px;">
+            <li><strong>€25,000</strong> – Euro / Savings / Custody / Cryptocurrency Account</li>
+            <li><strong>$25,000</strong> – USD Account</li>
+            <li><strong>€50,000</strong> – Numbered Account</li>
+          </ul>
+          <br>
+          <strong>Refund Policy (No Exceptions):</strong> If the application is declined and no account is opened, the Account Opening Fee will be refunded in full by PCM within ten (10) business days. If approved and an account is opened, the fee is non-refundable.
+        </div>
+
+        <div class="section-divider">
+          <div class="section-divider-line"></div>
+          <div class="section-divider-label">Option 1 — International Wire (SWIFT)</div>
+          <div class="section-divider-line"></div>
+        </div>
+
+        <div class="payment-block">
+          <div class="payment-block-title">
+            🇪🇺 Euro (€) SWIFT Details
+          </div>
+          <div class="payment-row"><span class="payment-key">Bank Name</span><span class="payment-val">Wise Europe</span></div>
+          <div class="payment-row"><span class="payment-key">Bank Address</span><span class="payment-val">Rue du Trône 100, 3rd floor. Brussels. 1050. Belgium</span></div>
+          <div class="payment-row"><span class="payment-key">SWIFT Code</span><span class="payment-val">TRWIBEB1XXX <button class="copy-btn" onclick="copyText('TRWIBEB1XXX', this)">Copy</button></span></div>
+          <div class="payment-row"><span class="payment-key">Account Name</span><span class="payment-val">PROMINENCE CLIENT MANAGEMENT</span></div>
+          <div class="payment-row"><span class="payment-key">IBAN</span><span class="payment-val">BE31905717979455 <button class="copy-btn" onclick="copyText('BE31905717979455', this)">Copy</button></span></div>
+          <div class="payment-row"><span class="payment-key">Payment Reference</span><span class="payment-val">Application ID: [Your ID] | Onboarding and Compliance Processing Fee</span></div>
+        </div>
+
+        <div class="payment-block">
+          <div class="payment-block-title">
+            🇺🇸 USD ($) SWIFT Details
+          </div>
+          <div class="payment-row"><span class="payment-key">Bank Name</span><span class="payment-val">Wise US Inc.</span></div>
+          <div class="payment-row"><span class="payment-key">Bank Address</span><span class="payment-val">108 W 13th St, Wilmington, DE, 19801, United States</span></div>
+          <div class="payment-row"><span class="payment-key">SWIFT Code</span><span class="payment-val">TRWIUS35XXX <button class="copy-btn" onclick="copyText('TRWIUS35XXX', this)">Copy</button></span></div>
+          <div class="payment-row"><span class="payment-key">Account Name</span><span class="payment-val">PROMINENCE CLIENT MANAGEMENT</span></div>
+          <div class="payment-row"><span class="payment-key">Account Number</span><span class="payment-val">205414015428310 <button class="copy-btn" onclick="copyText('205414015428310', this)">Copy</button></span></div>
+        </div>
+
+        <div class="section-divider">
+          <div class="section-divider-line"></div>
+          <div class="section-divider-label">Option 2 — Cryptocurrency (USDT TRC20)</div>
+          <div class="section-divider-line"></div>
+        </div>
+
+        <div class="payment-block">
+          <div class="payment-block-title">₮ USDT TRC20 Wallet</div>
+          <div class="info-box" style="margin-bottom:12px;">Please contact us directly for the current USDT TRC20 wallet address to ensure it is up to date.</div>
+        </div>
+
+        <div class="form-nav">
+          <div class="nav-left">
+            <button class="btn btn-secondary" onclick="goPrev()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              Back
+            </button>
+          </div>
+          <button class="btn btn-primary" onclick="goNext()">
+            Review &amp; Submit
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ STEP 8: REVIEW & SUBMIT ════ -->
+    <div class="step-panel" id="step8">
+      <div class="form-card-header">
+        <div class="form-section-title">Review &amp; Submit</div>
+        <div class="form-section-desc">Please review your application carefully before submitting. You can go back to any step to make changes.</div>
+      </div>
+      <div class="form-card-body">
+
+        <div class="review-section">
+          <div class="review-section-title">Account Type</div>
+          <div class="review-grid">
+            <div class="review-row"><span class="review-key">Account Type</span><span class="review-val" id="rv-accountType">Savings Account</span></div>
+            <div class="review-row"><span class="review-key">Application ID</span><span class="review-val" id="rv-appId">—</span></div>
+          </div>
+        </div>
+
+        <div class="review-section">
+          <div class="review-section-title">Personal Details</div>
+          <div class="review-grid">
+            <div class="review-row"><span class="review-key">Full Name</span><span class="review-val">[Provided above]</span></div>
+            <div class="review-row"><span class="review-key">Date of Birth</span><span class="review-val">[Provided above]</span></div>
+            <div class="review-row"><span class="review-key">Nationality</span><span class="review-val">[Provided above]</span></div>
+            <div class="review-row"><span class="review-key">Passport No.</span><span class="review-val">[Provided above]</span></div>
+          </div>
+        </div>
+
+        <div class="review-section">
+          <div class="review-section-title">Contact</div>
+          <div class="review-grid">
+            <div class="review-row"><span class="review-key">Email</span><span class="review-val">[Provided above]</span></div>
+            <div class="review-row"><span class="review-key">Mobile</span><span class="review-val">[Provided above]</span></div>
+            <div class="review-row"><span class="review-key">Country</span><span class="review-val">[Provided above]</span></div>
+          </div>
+        </div>
+
+        <div class="section-divider">
+          <div class="section-divider-line"></div>
+          <div class="section-divider-label">Declaration</div>
+          <div class="section-divider-line"></div>
+        </div>
+
+        <label class="checkbox-group">
+          <input type="checkbox" id="dec1">
+          <div class="custom-checkbox"></div>
+          <span class="checkbox-label">I confirm that all information provided in this application is true, accurate, and complete to the best of my knowledge.</span>
+        </label>
+        <label class="checkbox-group">
+          <input type="checkbox" id="dec2">
+          <div class="custom-checkbox"></div>
+          <span class="checkbox-label">I understand that payment of the Account Opening Fee does not guarantee approval or account opening.</span>
+        </label>
+        <label class="checkbox-group">
+          <input type="checkbox" id="dec3">
+          <div class="custom-checkbox"></div>
+          <span class="checkbox-label">I consent to Prominence Bank processing my personal data for the purpose of this application, in accordance with applicable data protection laws.</span>
+        </label>
+
+        <div class="form-nav">
+          <div class="nav-left">
+            <button class="btn btn-secondary" onclick="goPrev()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              Back
+            </button>
+          </div>
+          <button class="btn btn-submit" onclick="submitForm()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Submit Application
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ SUCCESS ════ -->
+    <div class="step-panel" id="stepSuccess">
+      <div class="success-panel">
+        <div class="success-icon">✓</div>
+        <h2 class="success-title">Application Submitted!</h2>
+        <p class="success-sub">Thank you for applying to Prominence Bank. Your application has been received and will be reviewed by our compliance team. We will contact you at the email address provided.</p>
+        <div class="app-id-display" id="successAppId">PBA-2025-00001</div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:28px;">Please keep your Application ID safe. You will need it for payment reference.</p>
+        <button class="btn btn-primary" onclick="location.reload()">Start New Application</button>
+      </div>
+    </div>
+
+  </div><!-- /form-card -->
+</div><!-- /main-wrap -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-line">
+    <strong style="color:rgba(255,255,255,0.6)">PROMINENCE BANK</strong> &nbsp;|&nbsp; Diplomatic Jurisdiction – Foreign Trade Mission Office (ETMO)
+  </div>
+  <div class="footer-line">
+    +44 20 8895 6493 &nbsp;|&nbsp; <a href="https://prominencebank.com">prominencebank.com</a>
+  </div>
+  <div class="footer-line" style="margin-top:10px;">
+    © 2025 Prominence Bank. All rights reserved. &nbsp;|&nbsp; <a href="#">Privacy Policy</a> &nbsp;|&nbsp; <a href="#">Terms & Conditions</a>
+  </div>
+</footer>
+
+<script>
+  let currentStep = 1;
+  const totalSteps = 8;
+  const progressMap = {1:12,2:25,3:37,4:50,5:62,6:75,7:87,8:100};
+
+  /* ── VALIDATION RULES per step ──
+     Each step returns [] if valid, or array of error messages if not.
+  */
+  function validateStep(step) {
+    const errors = [];
+
+    function requireField(selector, label) {
+      const el = document.querySelector('#step' + step + ' ' + selector);
+      if (!el) return;
+      const val = el.value.trim();
+      if (!val) {
+        markError(el, label + ' is required.');
+        errors.push(label);
+      } else {
+        clearError(el);
+      }
+    }
+
+    function requireEmail(selector, label) {
+      const el = document.querySelector('#step' + step + ' ' + selector);
+      if (!el) return;
+      const val = el.value.trim();
+      if (!val) {
+        markError(el, label + ' is required.');
+        errors.push(label);
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+        markError(el, label + ' must be a valid email address.');
+        errors.push(label);
+      } else {
+        clearError(el);
+      }
+    }
+
+    function requireMatch(sel1, sel2, label) {
+      const a = document.querySelector('#step' + step + ' ' + sel1);
+      const b = document.querySelector('#step' + step + ' ' + sel2);
+      if (!a || !b) return;
+      if (a.value.trim() !== b.value.trim() || !a.value.trim()) {
+        markError(b, label + ' must match.');
+        errors.push(label + ' mismatch');
+      } else {
+        clearError(b);
+      }
+    }
+
+    function requireFile(inputId, label) {
+      const el = document.getElementById(inputId);
+      if (!el) return;
+      if (!el.files || el.files.length === 0) {
+        const area = el.closest('.file-upload-area');
+        if (area) {
+          area.style.borderColor = 'var(--red)';
+          let msg = area.querySelector('.file-error-msg');
+          if (!msg) {
+            msg = document.createElement('div');
+            msg.className = 'file-error-msg';
+            msg.style.cssText = 'color:var(--red);font-size:12px;margin-top:8px;';
+            area.appendChild(msg);
+          }
+          msg.textContent = label + ' is required.';
+        }
+        errors.push(label);
+      } else {
+        const area = el.closest('.file-upload-area');
+        if (area) {
+          area.style.borderColor = '';
+          const msg = area.querySelector('.file-error-msg');
+          if (msg) msg.remove();
+        }
+      }
+    }
+
+    function requireChecks(ids, label) {
+      const allChecked = ids.every(id => {
+        const el = document.getElementById(id);
+        return el && el.checked;
+      });
+      if (!allChecked) {
+        errors.push(label);
+      }
+    }
+
+    if (step === 1) {
+      requireField('#appId', 'Application ID');
+    }
+
+    if (step === 2) {
+      // All inputs/selects inside step2 that have required attr
+      document.querySelectorAll('#step2 .field-input[required], #step2 .field-select[required]').forEach(el => {
+        const label = el.closest('.field-group')?.querySelector('.field-label')?.textContent.replace('*','').trim() || 'Field';
+        if (!el.value.trim()) {
+          markError(el, label + ' is required.');
+          errors.push(label);
+        } else {
+          clearError(el);
+        }
+      });
+    }
+
+    if (step === 3) {
+      // Home address line 1
+      const addr = document.querySelector('#step3 .field-input[placeholder="Street address"]');
+      if (addr && !addr.value.trim()) { markError(addr, 'Home Address is required.'); errors.push('Home Address'); } else if(addr) clearError(addr);
+
+      // Country select
+      const country = document.querySelector('#step3 .field-select');
+      if (country && !country.value) { markError(country, 'Country is required.'); errors.push('Country'); } else if(country) clearError(country);
+
+      // Email
+      requireEmail('input[placeholder="your@email.com"]', 'Email Address');
+      requireEmail('input[placeholder="Confirm email"]', 'Confirm Email');
+      requireMatch('input[placeholder="your@email.com"]', 'input[placeholder="Confirm email"]', 'Email');
+
+      // Mobile
+      const mobile = document.querySelector('#step3 input[placeholder="+44 XXXX XXXXXX"]');
+      if (mobile && !mobile.value.trim()) { markError(mobile, 'Mobile Number is required.'); errors.push('Mobile'); } else if(mobile) clearError(mobile);
+    }
+
+    if (step === 4) {
+      const currency = document.querySelector('#step4 .field-select');
+      if (currency && !currency.value) { markError(currency, 'Account Currency is required.'); errors.push('Account Currency'); } else if(currency) clearError(currency);
+    }
+
+    if (step === 5) {
+      // No strictly required fields — source of funds is informational, but let's require the description
+      const desc = document.querySelector('#step5 .field-textarea');
+      if (desc && !desc.value.trim()) { markError(desc, 'Please describe how funds were generated.'); errors.push('Fund Description'); } else if(desc) clearError(desc);
+    }
+
+    if (step === 6) {
+      requireFile('passportFile', 'Passport Photo');
+    }
+
+    // Step 7 (payment info) — informational only, no required inputs
+    if (step === 7) { /* no validation needed */ }
+
+    if (step === 8) {
+      requireChecks(['dec1','dec2','dec3'], 'All declarations must be confirmed');
+      if (errors.length) {
+        showToast('Please confirm all three declarations before submitting.', 'error');
+      }
+    }
+
+    return errors;
+  }
+
+  function markError(el, msg) {
+    el.style.borderColor = 'var(--red)';
+    el.style.boxShadow = '0 0 0 3px rgba(229,62,62,0.15)';
+    let errEl = el.parentElement.querySelector('.inline-error');
+    if (!errEl) {
+      errEl = document.createElement('div');
+      errEl.className = 'inline-error';
+      errEl.style.cssText = 'color:var(--red);font-size:11.5px;margin-top:4px;';
+      el.parentElement.appendChild(errEl);
+    }
+    errEl.textContent = msg;
+  }
+
+  function clearError(el) {
+    el.style.borderColor = '';
+    el.style.boxShadow = '';
+    const errEl = el.parentElement.querySelector('.inline-error');
+    if (errEl) errEl.remove();
+  }
+
+  // Clear errors on input
+  document.addEventListener('input', e => {
+    if (e.target.matches('.field-input, .field-select, .field-textarea')) {
+      clearError(e.target);
+    }
+  });
+  document.addEventListener('change', e => {
+    if (e.target.matches('.field-input, .field-select, .field-textarea')) {
+      clearError(e.target);
+    }
+  });
+
+  /* ── TOAST NOTIFICATION ── */
+  function showToast(msg, type) {
+    let toast = document.getElementById('validationToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'validationToast';
+      toast.style.cssText = `
+        position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(80px);
+        background: #1e293b; border: 1.5px solid var(--red); border-radius: 10px;
+        padding: 14px 24px; font-size: 13.5px; color: #fff; font-family: 'DM Sans',sans-serif;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4); z-index: 9999; transition: transform 0.3s ease, opacity 0.3s ease;
+        opacity: 0; max-width: 420px; text-align: center; line-height:1.5;
+      `;
+      document.body.appendChild(toast);
+    }
+    toast.style.borderColor = type === 'error' ? 'var(--red)' : 'var(--green)';
+    toast.innerHTML = (type === 'error' ? '⚠️ ' : '✓ ') + msg;
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    toast.style.opacity = '1';
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+      toast.style.transform = 'translateX(-50%) translateY(80px)';
+      toast.style.opacity = '0';
+    }, 3500);
+  }
+
+  function updateProgress(step) {
+    const pct = progressMap[step] || 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '% Complete';
+    document.getElementById('stepLabel').textContent = 'Step ' + step + ' of ' + totalSteps;
+    document.querySelectorAll('.step-tab').forEach(tab => {
+      const n = +tab.dataset.step;
+      tab.classList.remove('active','completed');
+      if(n === step) tab.classList.add('active');
+      else if(n < step) tab.classList.add('completed');
+    });
+  }
+
+  function showStep(n) {
+    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+    const panel = document.getElementById('step' + n);
+    if(panel) { panel.classList.add('active'); updateProgress(n); }
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  function goNext() {
+    const errors = validateStep(currentStep);
+    if (errors.length > 0) {
+      showToast('Please complete all required fields before continuing.', 'error');
+      // Scroll to first error
+      const firstErr = document.querySelector('#step' + currentStep + ' .field-input[style*="red"], #step' + currentStep + ' .field-select[style*="red"], #step' + currentStep + ' .field-textarea[style*="red"]');
+      if (firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    if (currentStep < totalSteps) { currentStep++; showStep(currentStep); }
+  }
+
+  function goPrev() {
+    if(currentStep > 1) { currentStep--; showStep(currentStep); }
+  }
+
+  function saveLater() {
+    const id = document.getElementById('appId')?.value || 'PBA-DRAFT';
+    alert('Your progress has been saved. Reference: ' + id + '\n\nYou can return to complete your application at any time.');
+  }
+
+  function selectAccount(el) {
+    document.querySelectorAll('.account-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    el.querySelector('input').checked = true;
+  }
+
+  function showFileName(input, displayId) {
+    const display = document.getElementById(displayId);
+    if(input.files && input.files[0]) {
+      display.textContent = '✓ ' + input.files[0].name;
+      display.style.display = 'block';
+      // Clear file upload error if any
+      const area = input.closest('.file-upload-area');
+      if (area) {
+        area.style.borderColor = '';
+        const msg = area.querySelector('.file-error-msg');
+        if (msg) msg.remove();
+      }
+    }
+  }
+
+  function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.style.background = 'rgba(56,178,224,0.2)';
+      btn.style.color = '#38b2e0';
+      setTimeout(() => { btn.textContent = orig; btn.style.background=''; btn.style.color=''; }, 1500);
+    });
+  }
+
+  function submitForm() {
+    const errors = validateStep(8);
+    if (errors.length > 0) return;
+    const appId = document.getElementById('appId').value || 'PBA-2025-' + Math.floor(Math.random()*90000+10000);
+    document.getElementById('successAppId').textContent = appId;
+    document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('stepSuccess').classList.add('active');
+    document.querySelectorAll('.step-tab').forEach(t => t.classList.add('completed'));
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('progressPct').textContent = '100% Complete';
+    document.getElementById('stepLabel').textContent = 'Submitted ✓';
+    window.scrollTo({top: 0, behavior:'smooth'});
+  }
+
+  // Click on step tabs to navigate (only to already-completed steps)
+  document.querySelectorAll('.step-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const n = +tab.dataset.step;
+      if(n < currentStep) { currentStep = n; showStep(n); }
+    });
+  });
+</script>
+</body>
+</html>
